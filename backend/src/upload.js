@@ -15,8 +15,8 @@ const s3 = new aws.S3();
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: process.env.S3_BUCKET_NAME,
-    acl: 'public-read', // 외부에서 파일에 접근 가능하도록 설정
+    bucket: process.env.S3_BUCKET,
+    //acl: 'public-read', // 외부에서 파일에 접근 가능하도록 설정
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },

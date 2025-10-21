@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { getPosts, createPost } = require('../controllers/postController');
 const { protect } = require('../middlewares/auth');
-const upload = require('../src/s3'); // S3 업로드 미들웨어
+const upload = require('../src/upload'); // S3 업로드 미들웨어
 
 // GET /api/posts - 모든 기록 조회
 // POST /api/posts - 새 기록 생성
