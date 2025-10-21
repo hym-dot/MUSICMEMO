@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { getPosts, createPost } = require('../controllers/postController');
-const { protect } = require('../middleware/auth');
+const { protect } = require('../middlewares/auth');
 const upload = require('../src/s3'); // S3 업로드 미들웨어
 
 // GET /api/posts - 모든 기록 조회
