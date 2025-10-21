@@ -5,9 +5,15 @@ const Post = require('../models/Post');
 // @route   GET /api/posts
 const getPosts = async (req, res) => {
     // 로그인한 사용자의 post만 가져옴
+    console.log("=== V2 새 코드가 실행되었습니다! ===");
+
     const posts = await Post.find({ user: req.user.id }).sort({ createdAt: -1 });
+    console.log("posts 변수의 정체:", posts);
+    console.log("posts는 배열인가?", Array.isArray(posts));
     res.json(posts);
 };
+
+
 
 // @desc    Create a new post
 // @route   POST /api/posts
