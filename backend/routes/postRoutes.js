@@ -1,7 +1,8 @@
-// routes/postRoutes.js
+// backend/routes/postRoutes.js
 const express = require('express');
 const router = express.Router();
-const { getPosts, createPost } = require('../controllers/postController');
+// ▼▼▼ [수정됨] deletePost 임포트 ▼▼▼
+const { getPosts, createPost, deletePost } = require('../controllers/postController');
 const { protect } = require('../middlewares/auth');
 const upload = require('../src/upload'); // S3 업로드 미들웨어
 
@@ -19,6 +20,11 @@ router.route('/')
         createPost
     );
 
-// (여기에 /api/posts/:id 에 대한 GET, PUT, DELETE 라우트 추가)
+// ▼▼▼ [새로 추가된 경로] ▼▼▼
+// DELETE /api/posts/:id - (삭제)
+router.route('/:id').delete(protect, deletePost);
+// ▲▲▲ [새로 추가된 경로] ▲▲▲
+
+// (여기에 /api/posts/:id 에 대한 GET, PUT 라우트 추가)
 
 module.exports = router;
