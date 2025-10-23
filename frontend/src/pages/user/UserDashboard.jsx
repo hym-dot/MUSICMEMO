@@ -1,32 +1,46 @@
 // src/pages/user/UserDashboard.jsx
-import React,{ useState } from "react";
-import "./style/UserDashboard.scss";
-import UploadForm from "./UploadForm"; // 파일 업로드 폼
-import FileList from "./FileList"; // 파일 목록
-// import './style/UserDashboard.scss';
+import React, { useState } from 'react';
+import UploadForm from './UploadForm';
+import FileList from './FileList';
+import './style/UserDashboard.scss';
 
 const UserDashboard = () => {
-  // FileList를 새로고침하기 위한 '트리거' 상태입니다.
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // UploadForm이 성공적으로 업로드되었을 때 호출될 함수
   const handleUploadSuccess = () => {
-    console.log("업로드 성공! 목록을 새로고침합니다.");
-    // refreshKey 값을 1 증가시켜 FileList 컴포넌트를 강제로 리렌더링(새로고침)합니다.
-    setRefreshKey((oldKey) => oldKey + 1);
+    console.log('업로드 성공! 목록을 새로고침합니다.');
+    setRefreshKey(oldKey => oldKey + 1);
   };
 
   return (
-    <div className="user-dashboard">
-      <h2>나의 음악 기록</h2>
+    <div className="windows-container dashboard-window">
+      <div className="title-bar">
+        <div className="title-bar-text">MUSICMEMO Dashboard</div>
+        <div className="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
 
-      {/* 1. 업로드 폼 */}
-      <UploadForm onUploadSuccess={handleUploadSuccess} />
+      <div className="window-body dashboard-body">
+        <h2 className="dashboard-title pixel-text">나의 음악 기록</h2>
+        
+        {/* ▼▼▼ [수정됨] 가로 배치를 위한 래퍼 추가 ▼▼▼ */}
+        <div className="dashboard-content-horizontal">
+          
+          <div className="upload-form-wrapper">
+            <UploadForm onUploadSuccess={handleUploadSuccess} />
+          </div>
+          
+          <div className="file-list-wrapper">
+            <FileList key={refreshKey} />
+          </div>
 
-      <hr />
-
-      {/* 2. 기록 목록 (key prop에 refreshKey를 전달) */}
-      <FileList key={refreshKey} />
+        </div>
+        {/* ▲▲▲ [수정됨] ▲▲▲ */}
+        
+      </div>
     </div>
   );
 };

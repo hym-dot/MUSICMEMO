@@ -1,90 +1,110 @@
 // src/pages/user/UploadForm.jsx
 import React, { useState } from 'react';
+import client from '../../api/client';
 import './style/UploadForm.scss';
-import client from '../../api/client'; // axios client
 
-// 부모(UserDashboard)로부터 onUploadSuccess 함수를 props로 받음
 const UploadForm = ({ onUploadSuccess }) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
-  const [albumCover, setAlbumCover] = useState(null); // 파일 상태
+  // ▼▼▼ [수정됨] memo 상태 삭제 ▼▼▼
+  const [albumCover, setAlbumCover] = useState(null);
+  // ▼▼▼ [수정됨] musicFile 상태 삭제 ▼▼▼
   
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!albumCover) {
-      setError('앨범 커버 이미지를 선택해주세요.');
+    if (!title) {
+      setError('곡 제목을 입력해주세요.');
       return;
     }
     
     setIsUploading(true);
     setError('');
 
-    // 파일 업로드는 반드시 FormData 객체를 사용해야 합니다.
     const formData = new FormData();
     formData.append('title', title);
     formData.append('artist', artist);
-    formData.append('albumCover', albumCover); // 파일 자체를 추가
-    // formData.append('music', musicFile); // 음악 파일도 있다면 추가
+    // ▼▼▼ [수정됨] memo 로직 삭제 ▼▼▼
+    if (albumCover) {
+      // ▼▼▼ [수정됨] 'albumCover' 이름으로 전송 ▼▼▼
+      formData.append('albumCover', albumCover);
+    }
+    // ▼▼▼ [수정됨] musicFile 로직 삭제 ▼▼▼
 
     try {
-      // client가 자동으로 헤더에 토큰을 추가해줍니다.
       await client.post('/api/posts', formData, {
-        // FormData를 보낼 때는 Content-Type을 'multipart/form-data'로 명시
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       
-      // 성공 시 폼 초기화
       setTitle('');
       setArtist('');
+      // ▼▼▼ [수정됨] memo 초기화 삭제 ▼▼▼
       setAlbumCover(null);
-      e.target.reset(); // 파일 인풋 초기화
-      setIsUploading(false);
+      // ▼▼▼ [수정됨] musicFile 초기화 삭제 ▼▼▼
+      e.target.reset();
       
-      // 부모 컴포넌트에게 업로드 성공을 알림 (목록 새로고침)
       onUploadSuccess(); 
-      
+
     } catch (err) {
-      setError('업로드 실패: ' + (err.response?.data?.message || err.message));
+      setError(err.response?.data?.message || '기록 추가에 실패했습니다.');
+    } finally {
       setIsUploading(false);
     }
   };
 
   return (
-    <form className="upload-form" onSubmit={handleSubmit}>
+    <div className="upload-form">
       <h4>새 음악 기록하기</h4>
-      <input 
-        type="text" 
-        placeholder="곡 제목" 
-        value={title} 
-        onChange={(e) => setTitle(e.target.value)} 
-        required 
-      />
-      <input 
-        type="text" 
-        placeholder="아티스트" 
-        value={artist} 
-        onChange={(e) => setArtist(e.target.value)} 
-        required 
-      />
-      <label>
-        앨범 커버:
-        <input 
-          type="file" 
-          accept="image/*" // 이미지 파일만
-          onChange={(e) => setAlbumCover(e.target.files[0])} 
-          required 
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="title"
+          placeholder="곡 제목 (필수)"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          className="windows-input"
         />
-      </label>
-      <button type="submit" disabled={isUploading}>
-        {isUploading ? '업로드 중...' : '기록 추가'}
-      </button>
-      {error && <p className="error-msg">{error}</p>}
-    </form>
+        <input
+          type="text"
+          name="artist"
+          placeholder="아티스트"
+          value={artist}
+          onChange={(e) => setArtist(e.target.value)}
+          className="windows-input"
+        />
+        {/* ▼▼▼ [수정됨] memo <textarea> 삭제 ▼▼▼ */}
+        
+        <div className="file-input-group">
+          <label className="windows-button file-label">
+            앨범 커버 선택
+            <input
+              type="file"
+              name="albumCover"
+              accept="image/*"
+              // ▼▼▼ [수정됨] file state 변경 ▼▼▼
+              onChange={(e) => setAlbumCover(e.target.files[0])}
+              style={{ display: 'none' }}
+            />
+          </label>
+          <span className="selected-file-name">
+            {albumCover ? albumCover.name : '선택된 파일 없음'}
+          </span>
+        </div>
+
+        {/* ▼▼▼ [수정됨] "음악 파일 선택" div 삭제 ▼▼▼ */}
+        
+        <button type="submit" disabled={isUploading} className="windows-button primary">
+          {isUploading ? '기록 추가 중...' : '기록 추가'}
+        </button>
+
+        {error && <p className="error-msg">{error}</p>}
+      </form>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 /* src/index.scss */
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DungGeunMo&family=Press+Start+2P&display=swap');
 /* 'Press Start 2P' 폰트는 픽셀 아트 게임 느낌을 줍니다. */
 /* 또는 다른 픽셀 폰트를 사용하세요. */
 
@@ -8,7 +9,7 @@
 body {
     margin: 0;
     // 기존 폰트 대신 픽셀 아트 폰트 사용 (선택 사항)
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Press Start 2P', 'DungGeunMo', cursive;
     /* 폰트 추가 */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
