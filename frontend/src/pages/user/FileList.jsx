@@ -1,4 +1,4 @@
-// src/pages/user/FileList.jsx
+// frontend/src/pages/user/FileList.jsx
 import React, { useState, useEffect } from 'react';
 import client from '../../api/client';
 import './style/FileList.scss';
@@ -14,20 +14,23 @@ const FileList = () => {
       setError('');
       try {
         const { data } = await client.get('/api/posts');
+        // ▼▼▼ 로그 1: 백엔드에서 받은 데이터 확인 ▼▼▼
+        console.log("=== [FileList] 백엔드로부터 받은 데이터:", data);
+        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
         setPosts(data);
       } catch (err) {
         setError('데이터를 불러오는 데 실패했습니다.');
+        console.error("데이터 로딩 오류:", err); // 에러 로그 추가
       }
       setIsLoading(false);
     };
 
     fetchPosts();
-  }, []); // key prop이 바뀌면 이 컴포넌트 전체가 재실행(re-mount)됩니다.
+  }, []); // key prop이 바뀌면 이 컴포넌트 전체가 재실행됩니다.
 
   const handleDelete = async (postId) => {
-    if (!window.confirm('이 기록을 정말 삭제하시겠습니까?')) {
-      return;
-    }
+    // ... (삭제 함수는 동일) ...
+    if (!window.confirm('이 기록을 정말 삭제하시겠습니까?')) return;
     try {
       await client.delete(`/api/posts/${postId}`);
       setPosts(posts.filter((post) => post._id !== postId));
@@ -44,46 +47,31 @@ const FileList = () => {
     <div className="file-list-container">
       <h4>내 기록 목록</h4>
       {posts.length === 0 ? (
-        <p className="pixel-text">아직 기록이 없습니다. 새 기록을 추가해보세요!</p>
+        <p className="pixel-text">아직 기록이 없습니다.</p>
       ) : (
         <ul className="file-list">
-          {posts.map((post) => (
-            <li key={post._id} className="post-item">
-              {/* ▼▼▼ [수정됨] <a> 태그 추가 ▼▼▼ */}
-              {post.youtubeUrl ? ( // 유튜브 링크가 있으면 <a> 태그로 감싸기
-                <a
-                  href={post.youtubeUrl}
-                  target="_blank" // 새 탭에서 열기
-                  rel="noopener noreferrer" // 보안 설정
-                  className="album-link" // 스타일링을 위한 클래스
-                >
-                  <img
-                    src={post.albumCoverUrl}
-                    alt={post.title}
-                    className="album-cover"
-                  />
-                </a>
-              ) : ( // 유튜브 링크가 없으면 그냥 이미지 표시
-                <img
-                  src={post.albumCoverUrl}
-                  alt={post.title}
-                  className="album-cover no-link" // 링크 없음을 나타내는 클래스
-                />
-              )}
-              {/* ▲▲▲ [수정됨] ▲▲▲ */}
+          {posts.map((post) => { // <<< 맵 함수 시작 시 중괄호 추가
+            // ▼▼▼ 로그 2: 각 앨범 렌더링 직전 데이터 확인 ▼▼▼
+            console.log(`[FileList] 앨범 "${post.title}" 렌더링 중... youtubeUrl 값:`, post.youtubeUrl, "존재 여부:", !!post.youtubeUrl);
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
-              <div className="post-info">
-                <strong>{post.title}</strong>
-                <span>{post.artist}</span>
-              </div>
-              <button
-                className="delete-btn"
-                onClick={() => handleDelete(post._id)}
-              >
-                X
-              </button>
-            </li>
-          ))}
+            return ( // <<< return 구문 추가
+              <li key={post._id} className="post-item">
+                {post.youtubeUrl ? ( // youtubeUrl 값으로 링크 생성 여부 결정
+                  <a href={post.youtubeUrl} target="_blank" rel="noopener noreferrer" className="album-link">
+                    <img src={post.albumCoverUrl} alt={post.title} className="album-cover"/>
+                  </a>
+                ) : (
+                  <img src={post.albumCoverUrl} alt={post.title} className="album-cover no-link"/>
+                )}
+                <div className="post-info">
+                  <strong>{post.title}</strong>
+                  <span>{post.artist}</span>
+                </div>
+                <button className="delete-btn" onClick={() => handleDelete(post._id)}>X</button>
+              </li>
+            ); // <<< return 구문 추가
+          })} {/* <<< 맵 함수 끝 중괄호 추가 */}
         </ul>
       )}
     </div>

@@ -6,12 +6,17 @@ import './style/UploadForm.scss';
 const UploadForm = ({ onUploadSuccess }) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
-  // ▼▼▼ [수정됨] memo 상태 삭제 ▼▼▼
-  const [albumCover, setAlbumCover] = useState(null);
-  // ▼▼▼ [수정됨] musicFile 상태 삭제 ▼▼▼
-  
+  const [albumCover, setAlbumCover] = useState(null); // 파일 상태 유지
+
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
+
+  // 파일 선택 시 호출될 핸들러
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setAlbumCover(file || null); // 파일이 없으면 null로 설정
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,19 +24,16 @@ const UploadForm = ({ onUploadSuccess }) => {
       setError('곡 제목을 입력해주세요.');
       return;
     }
-    
+
     setIsUploading(true);
     setError('');
 
     const formData = new FormData();
     formData.append('title', title);
     formData.append('artist', artist);
-    // ▼▼▼ [수정됨] memo 로직 삭제 ▼▼▼
     if (albumCover) {
-      // ▼▼▼ [수정됨] 'albumCover' 이름으로 전송 ▼▼▼
       formData.append('albumCover', albumCover);
     }
-    // ▼▼▼ [수정됨] musicFile 로직 삭제 ▼▼▼
 
     try {
       await client.post('/api/posts', formData, {
@@ -39,15 +41,14 @@ const UploadForm = ({ onUploadSuccess }) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      
+
+      // 폼 초기화
       setTitle('');
       setArtist('');
-      // ▼▼▼ [수정됨] memo 초기화 삭제 ▼▼▼
-      setAlbumCover(null);
-      // ▼▼▼ [수정됨] musicFile 초기화 삭제 ▼▼▼
+      setAlbumCover(null); // 파일 상태도 초기화
       e.target.reset();
-      
-      onUploadSuccess(); 
+
+      onUploadSuccess();
 
     } catch (err) {
       setError(err.response?.data?.message || '기록 추가에 실패했습니다.');
@@ -77,8 +78,7 @@ const UploadForm = ({ onUploadSuccess }) => {
           onChange={(e) => setArtist(e.target.value)}
           className="windows-input"
         />
-        {/* ▼▼▼ [수정됨] memo <textarea> 삭제 ▼▼▼ */}
-        
+
         <div className="file-input-group">
           <label className="windows-button file-label">
             앨범 커버 선택
@@ -86,18 +86,19 @@ const UploadForm = ({ onUploadSuccess }) => {
               type="file"
               name="albumCover"
               accept="image/*"
-              // ▼▼▼ [수정됨] file state 변경 ▼▼▼
-              onChange={(e) => setAlbumCover(e.target.files[0])}
+              onChange={handleFileChange}
               style={{ display: 'none' }}
             />
           </label>
-          <span className="selected-file-name">
-            {albumCover ? albumCover.name : '선택된 파일 없음'}
-          </span>
         </div>
 
-        {/* ▼▼▼ [수정됨] "음악 파일 선택" div 삭제 ▼▼▼ */}
-        
+        {/* ▼▼▼ 메시지 내용 수정됨 ▼▼▼ */}
+        <p className="selected-file-feedback">
+          {albumCover ? `앨범 커버 추가 완료: ${albumCover.name}` : '앨범 커버 파일을 선택하세요.'}
+        </p>
+        {/* ▲▲▲ 메시지 내용 수정됨 ▲▲▲ */}
+
+
         <button type="submit" disabled={isUploading} className="windows-button primary">
           {isUploading ? '기록 추가 중...' : '기록 추가'}
         </button>
