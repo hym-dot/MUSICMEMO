@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Landing from './pages/Landing';
 import UserDashboard from './pages/user/UserDashboard';
 import ProtectRoute from './components/ProtectRoute';
+import './App.scss';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="*" element={<Landing />} /> 
         </Routes>
       </main>
+      <img src="/cd.png" alt="Rotating CD" className="rotating-cd-global" />
     </div>
   );
 }

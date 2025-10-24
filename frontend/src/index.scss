@@ -7,59 +7,37 @@
 
 
 body {
-    margin: 0;
-    // 기존 폰트 대신 픽셀 아트 폰트 사용 (선택 사항)
-    font-family: 'Press Start 2P', 'DungGeunMo', cursive;
-    /* 폰트 추가 */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: 'Press Start 2P', 'DungGeunMo', cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-    // 픽셀 아트 배경 이미지 설정
-    background-image: url('/background.png');
-    /* public 폴더의 이미지 */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    /* 화면 전체를 덮도록 */
-    display: flex;
-    /* flexbox를 사용하여 컨텐츠 중앙 정렬 */
-    justify-content: center;
-    align-items: center;
-    /* 수직 중앙 정렬 */
+  background-image: url('/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+
+  display: flex; /* 가로 중앙 정렬은 유지 */
+  justify-content: center;
+  /* align-items: center; */ /* ◀◀◀ 세로 중앙 정렬 삭제! */
+  padding-top: 5vh; /* ◀◀◀ 위쪽 여백 추가 (화면 높이의 5%) */
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-// 기본 텍스트 색상 및 그림자 효과로 픽셀 느낌 강조
-html,
-body {
-    color: #333;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.7);
-    /* 글자 그림자로 입체감 */
-}
-
-// 헤더가 전체 레이아웃에 영향을 주지 않도록 절대 위치 지정 (선택 사항)
-.app-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    background-color: rgba(255, 255, 255, 0.8);
-    /* 반투명 배경 */
-    box-shadow: none;
-    /* 그림자 제거 */
-    border-bottom: none;
+html, body {
+  color: #333;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.7);
 }

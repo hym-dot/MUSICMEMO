@@ -94,7 +94,7 @@ const UploadForm = ({ onUploadSuccess }) => {
 
         {/* ▼▼▼ 메시지 내용 수정됨 ▼▼▼ */}
         <p className="selected-file-feedback">
-          {albumCover ? `앨범 커버 추가 완료: ${albumCover.name}` : '앨범 커버 파일을 선택하세요.'}
+          {albumCover ? `앨범 커버 추가 완료!` : ''}
         </p>
         {/* ▲▲▲ 메시지 내용 수정됨 ▲▲▲ */}
 

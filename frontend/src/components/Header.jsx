@@ -1,9 +1,8 @@
 // src/components/Header.jsx
 import React from 'react';
-import './style/Header.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-// import './style/Header.scss'; // 헤더 스타일
+import './style/Header.scss';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -11,17 +10,19 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/'); // 로그아웃 후 홈으로 이동
+    navigate('/');
   };
 
   return (
     <header className="app-header">
       <Link to={user ? "/dashboard" : "/"} className="logo-link">
-        <h1>MUSICMEMO 🎵</h1>
+        {/* ▼▼▼ 순서 변경: 로고 텍스트 먼저, 아이콘 나중에 ▼▼▼ */}
+        <h1>MUSICMEMO</h1>
+        <span className="music-note-icon">🎵</span>
+        {/* ▲▲▲ 순서 변경 ▲▲▲ */}
       </Link>
       <nav>
         {user ? (
-          // 로그인 상태일 때
           <div className="user-info">
             <span>안녕하세요, {user.name}님!</span>
             <button onClick={handleLogout} className="logout-btn">
@@ -29,7 +30,6 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          // 로그아웃 상태일 때
           <div className="guest-info">
             <span>로그인이 필요합니다.</span>
           </div>

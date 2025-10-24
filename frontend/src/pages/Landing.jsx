@@ -35,7 +35,7 @@ const Landing = () => {
       {/* 창 내용 */}
       <div className="window-body">
         <h2 className="pixel-title">MUSIC MEMO</h2>
-        <p className="pixel-text">나의 음악 기록</p>
+        <p className="pixel-text">나의 음악 기록🎶</p>
         <AuthModal />
       </div>
     </div>

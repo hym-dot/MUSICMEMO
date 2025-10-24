@@ -4,17 +4,29 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid #eee;
+  /* ▼▼▼ 좌우 패딩을 늘려서 네모 크기 확보 ▼▼▼ */
+  padding: 1rem 6rem; /* 예: 6rem (원하는 만큼 조절) */
+  /* ▲▲▲ 좌우 패딩 증가 ▲▲▲ */
+  background-color: rgba(255, 255, 255, 0.9);
+  
 
   .logo-link {
     text-decoration: none;
     color: #333;
+    /* ▼▼▼ Flexbox 정렬 확실히 적용 ▼▼▼ */
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 0.5rem; /* 로고와 아이콘 사이 간격 */
+    /* ▲▲▲ Flexbox 정렬 ▲▲▲ */
+
     h1 {
       margin: 0;
       font-size: 1.5rem;
+    }
+    .music-note-icon {
+      font-size: 1.5rem;
+      color: #6a0dad;
+      line-height: 1; /* 아이콘 세로 정렬 미세 조정 */
     }
   }
 
@@ -23,7 +35,13 @@
     .guest-info {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 6rem;
+      font-size: 1.2rem;
+      color: #333;
+
+      span {
+        white-space: nowrap; /* 줄바꿈 금지 유지 */
+      }
     }
 
     .logout-btn {
@@ -33,6 +51,7 @@
       padding: 0.5rem 1rem;
       border-radius: 4px;
       font-weight: bold;
+      white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
       &:hover {
         background: #d32f2f;
       }
