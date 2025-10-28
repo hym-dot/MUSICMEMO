@@ -1,14 +1,10 @@
 /* src/index.scss */
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DungGeunMo&family=Press+Start+2P&display=swap');
-/* 'Press Start 2P' 폰트는 픽셀 아트 게임 느낌을 줍니다. */
-/* 또는 다른 픽셀 폰트를 사용하세요. */
-
+@import url('https://fonts.googleapis.com/css2?family=DungGeunMo&family=Press+Start+P&display=swap');
 
 body {
   margin: 0;
-  font-family: 'Press Start 2P', 'DungGeunMo', cursive;
+  font-family: 'Press Start P', 'DungGeunMo', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -16,12 +12,24 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
+  min-height: 100vh; /* 최소 높이는 유지 */
 
-  display: flex; /* 가로 중앙 정렬은 유지 */
-  justify-content: center;
-  /* align-items: center; */ /* ◀◀◀ 세로 중앙 정렬 삭제! */
-  padding-top: 5vh; /* ◀◀◀ 위쪽 여백 추가 (화면 높이의 5%) */
+  /* ▼▼▼ [수정됨] flex 제거, padding만 유지 ▼▼▼ */
+  /* display: flex; (삭제) */
+  /* justify-content: center; (삭제) */
+  padding: 5vh 20px; /* 위아래, 좌우 여백 */
+  /* ▲▲▲ [수정됨] ▲▲▲ */
+}
+
+html {
+    /* ▼▼▼ [추가됨] 세로 스크롤 담당 명시 ▼▼▼ */
+    overflow-y: auto; /* 내용이 길어지면 html에만 세로 스크롤 */
+}
+
+html, body {
+  color: #333;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.7);
+  overflow-x: auto; /* 가로 스크롤 허용 유지 */
 }
 
 * {
@@ -35,9 +43,4 @@ a {
 
 button {
   cursor: pointer;
-}
-
-html, body {
-  color: #333;
-  text-shadow: 1px 1px 0px rgba(255,255,255,0.7);
 }

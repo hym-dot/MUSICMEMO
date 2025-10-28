@@ -16,10 +16,10 @@ const Header = () => {
   return (
     <header className="app-header">
       <Link to={user ? "/dashboard" : "/"} className="logo-link">
-        {/* ▼▼▼ 순서 변경: 로고 텍스트 먼저, 아이콘 나중에 ▼▼▼ */}
-        <h1>MUSICMEMO</h1>
-        <span className="music-note-icon">🎵</span>
-        {/* ▲▲▲ 순서 변경 ▲▲▲ */}
+    
+        <h1>MUSIC MEMO🎵</h1>
+         
+      
       </Link>
       <nav>
         {user ? (

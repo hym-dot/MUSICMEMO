@@ -18,19 +18,14 @@
 .rotating-cd-global {
     position: fixed;
     bottom: 30px;
-    left: 13px;
-    // ▼▼▼ [수정됨] 크기 키우고 동그랗게 만들기 ▼▼▼
-    width: 300px;
-    /* CD 크기 키움 (120px -> 200px) */
+    left: 5px;
+    width: 200px;
     height: 200px;
-    /* CD 크기 키움 (120px -> 200px). width와 같게 해야 완벽한 원 */
     border-radius: 50%;
-    /* 이미지를 동그랗게 만듭니다 */
-    // ▲▲▲ [수정됨] ▲▲▲
-    animation: rotate 8s linear infinite;
+    animation: rotate 4s linear infinite;
     image-rendering: pixelated;
     opacity: 0.8;
-    z-index: -1;
+    z-index: 0;
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
 }
 
@@ -38,8 +33,10 @@
 
 .App {
     position: relative;
-   
     min-height: 100vh;
+    width: fit-content;
+    min-width: 1200px;
+    margin: 0 auto;
 }
 
 main {
