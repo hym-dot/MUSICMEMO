@@ -18,11 +18,11 @@
 .rotating-cd-global {
     position: fixed;
     bottom: 30px;
-    left: 5px;
-    width: 200px;
-    height: 200px;
+    left: -80px;
+    width: 500px;
+    height: 400px;
     border-radius: 50%;
-    animation: rotate 4s linear infinite;
+    animation: rotate 3s linear infinite;
     image-rendering: pixelated;
     opacity: 0.8;
     z-index: 0;
