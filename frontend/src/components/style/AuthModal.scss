@@ -19,8 +19,11 @@
 }
 
 .auth-content {
-    padding: 20px;
+    padding: 30px 40px;
     /* 창 몸통 내부 패딩 */
+    max-width: 400px;
+    /* 전체 콘텐츠 최대 너비 */
+    margin: 0 auto;
     border: 2px solid #808080;
     /* 윈도우 스타일 안쪽 테두리 */
     box-shadow:
